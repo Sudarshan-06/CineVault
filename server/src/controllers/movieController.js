@@ -1,26 +1,32 @@
 import Movie from "../models/Movie.js";
 
 // GET /api/movies?genre=&actor=&director=&releaseYear=
+
+
 export const getMovies = async (req, res) => {
   try {
     const { genre, actor, director, releaseYear } = req.query;
 
     const filter = {};
 
+    // Filter by release year
     if (releaseYear) {
       filter.releaseYear = Number(releaseYear);
     }
 
-    if (director) {
+    // Filter by director (string)
+    if (director && director.trim() !== "") {
       filter.director = director;
     }
 
-    if (genre) {
-      filter.genres = genre; // array contains
+    // Filter by genre (array field)
+    if (genre && genre.trim() !== "") {
+      filter.genres = { $in: [genre] };
     }
 
-    if (actor) {
-      filter.actors = actor; // array contains
+    // Filter by actor (array field)
+    if (actor && actor.trim() !== "") {
+      filter.actors = { $in: [actor] };
     }
 
     const movies = await Movie.find(filter);

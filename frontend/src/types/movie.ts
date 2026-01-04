@@ -7,3 +7,4 @@ export interface Movie {
   genres: string[];
   actors: string[];
 }
+
