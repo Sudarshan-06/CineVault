@@ -1,51 +1,29 @@
-const Movie = require("../models/Movie");
+import Movie from "../models/Movie.js";
 
-exports.getMovies = async (req, res) => {
+// GET /api/movies?genre=&actor=&director=&releaseYear=
+export const getMovies = async (req, res) => {
   try {
     const { genre, actor, director, releaseYear } = req.query;
 
-    let query = Movie.find();
+    const filter = {};
 
     if (releaseYear) {
-      query = query.where("releaseYear").equals(Number(releaseYear));
+      filter.releaseYear = Number(releaseYear);
     }
 
     if (director) {
-      query = query.populate({
-        path: "director",
-        match: { name: director }
-      });
-    } else {
-      query = query.populate("director");
+      filter.director = director;
     }
 
     if (genre) {
-      query = query.populate({
-        path: "genres",
-        match: { name: genre }
-      });
-    } else {
-      query = query.populate("genres");
+      filter.genres = genre; // array contains
     }
 
     if (actor) {
-      query = query.populate({
-        path: "actors",
-        match: { name: actor }
-      });
-    } else {
-      query = query.populate("actors");
+      filter.actors = actor; // array contains
     }
 
-    let movies = await query.exec();
-
-    // Remove movies that failed populate filter
-    movies = movies.filter(
-      (m) =>
-        (!genre || m.genres.length > 0) &&
-        (!actor || m.actors.length > 0) &&
-        (!director || m.director)
-    );
+    const movies = await Movie.find(filter);
 
     res.status(200).json(movies);
   } catch (error) {
@@ -53,13 +31,10 @@ exports.getMovies = async (req, res) => {
   }
 };
 
-
-exports.getMovieById = async (req, res) => {
+// GET /api/movies/:id
+export const getMovieById = async (req, res) => {
   try {
-    const movie = await Movie.findById(req.params.id)
-      .populate("actors")
-      .populate("genres")
-      .populate("director");
+    const movie = await Movie.findById(req.params.id);
 
     if (!movie) {
       return res.status(404).json({ message: "Movie not found" });
@@ -71,8 +46,8 @@ exports.getMovieById = async (req, res) => {
   }
 };
 
-
-exports.createMovie = async (req, res) => {
+// POST /api/movies
+export const createMovie = async (req, res) => {
   try {
     const movie = await Movie.create(req.body);
     res.status(201).json(movie);

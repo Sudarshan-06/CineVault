@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const MovieSchema = new mongoose.Schema(
   {
@@ -21,21 +21,21 @@ const MovieSchema = new mongoose.Schema(
     },
 
     director: {
-      type: mongoose.Schema.Types.ObjectId,
+      type:String,
       ref: "Director",
-      required: true
+      // required: true
     },
 
     genres: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "Genre"
       }
     ],
 
     actors: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "Actor"
       }
     ]
@@ -43,4 +43,4 @@ const MovieSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Movie", MovieSchema);
+export default mongoose.model("Movie", MovieSchema);

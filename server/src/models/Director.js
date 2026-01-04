@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const DirectorSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
       trim: true
     }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Director", DirectorSchema);
+export default mongoose.model("Director", DirectorSchema);

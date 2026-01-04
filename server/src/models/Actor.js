@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const ActorScehema = new mongoose.Schema({
     name:{
         type: String,
@@ -7,4 +7,4 @@ const ActorScehema = new mongoose.Schema({
     }
     },
 );
-module.exports = mongoose.model('Actor', ActorScehema);
+export default mongoose.model('Actor', ActorScehema);

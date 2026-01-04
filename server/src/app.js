@@ -1,9 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-
-const movieRoutes = require("./routes/movieRoutes");
-
+import express from "express";
+import mongoose from "mongoose";
+import moviewRoutes from "./routes/movieRoutes.js";
+import cors from "cors";
 const app = express();
+import movieRoutes from "./routes/movieRoutes.js";
 
 app.use(cors());
 app.use(express.json());
@@ -14,4 +14,4 @@ app.get("/health", (req, res) => {
 
 app.use("/api/movies", movieRoutes);
 
-module.exports = app;
+export default app;
