@@ -30,15 +30,19 @@ export default async function HomePage({
   ]);
 
   return (
-    <main className="p-6 max-w-6xl mx-auto space-y-6">
-      <h1 className="text-4xl font-bold">🎬 CineVault</h1>
+    <main className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black text-white">
+    <h1 className="text-4xl font-extrabold tracking-tight flex items-center gap-3">
+  🎬 <span>CineVault</span>
+</h1>
 
       {/* FILTERS */}
-      <form className="flex gap-4 flex-wrap">
+      <form className="bg-zinc-900/70 backdrop-blur border border-zinc-800 rounded-xl p-4 flex flex-wrap gap-4 items-center">
+
         <select
           name="genre"
           defaultValue={resolvedParams.genre || ""}
-          className="border p-2"
+          className="bg-black border border-zinc-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+
         >
           <option value="">All Genres</option>
           {genres.map((g) => (
@@ -51,7 +55,8 @@ export default async function HomePage({
         <select
           name="director"
           defaultValue={resolvedParams.director || ""}
-          className="border p-2"
+        className="bg-black border border-zinc-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+
         >
           <option value="">All Directors</option>
           {directors.map((d) => (
@@ -64,7 +69,8 @@ export default async function HomePage({
         <select
           name="actor"
           defaultValue={resolvedParams.actor || ""}
-          className="border p-2"
+         className="bg-black border border-zinc-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+
         >
           <option value="">All Actors</option>
           {actors.map((a) => (
@@ -74,7 +80,7 @@ export default async function HomePage({
           ))}
         </select>
 
-        <button className="bg-black text-white px-4 py-2 rounded">
+        <button className="bg-purple-600 hover:bg-purple-700 transition text-white px-4 py-2 rounded-md font-medium">
           Apply Filters
         </button>
       </form>
@@ -93,7 +99,16 @@ export default async function HomePage({
           >
             <h2 className="text-xl font-semibold">{movie.title}</h2>
             <p>Release Year: {movie.releaseYear}</p>
-            <p>Director: {movie.director}</p>
+            <p>
+  Director:{" "}
+  <Link
+    href={`/directors/${encodeURIComponent(movie.director)}`}
+    className="underline"
+  >
+    {movie.director}
+  </Link>
+</p>
+
             <p className="text-sm text-gray-600">
               Genres: {movie.genres.join(", ")}
             </p>
