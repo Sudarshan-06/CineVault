@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: cinevault-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./server
+    container_name: cinevault-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend
+    container_name: cinevault-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mongo_data:

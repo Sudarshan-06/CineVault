@@ -6,5 +6,6 @@ export interface Movie {
   director: string;
   genres: string[];
   actors: string[];
+  image?: string;
 }
 

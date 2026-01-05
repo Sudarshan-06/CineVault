@@ -6,6 +6,7 @@ import {
   fetchActors,
 } from "@/lib/api";
 import { Movie } from "@/types/movie";
+import Image from "next/image";
 
 type SearchParams = {
   genre?: string;
@@ -90,31 +91,59 @@ export default async function HomePage({
         <p className="text-gray-500">No movies found</p>
       )}
 
-      <div className="grid gap-4">
-        {movies.map((movie) => (
-          <Link
-            key={movie._id}
-            href={`/movies/${movie._id}`}
-            className="p-4 border rounded hover:bg-gray-50"
-          >
-            <h2 className="text-xl font-semibold">{movie.title}</h2>
-            <p>Release Year: {movie.releaseYear}</p>
-            <p>
-  Director:{" "}
-  <Link
-    href={`/directors/${encodeURIComponent(movie.director)}`}
-    className="underline"
-  >
-    {movie.director}
-  </Link>
-</p>
+      {/* MOVIES */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+  {movies.map((movie) => (
+    <div
+      key={movie._id}
+      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden border border-zinc-200"
+    >
+      {/* IMAGE */}
+    <div className="relative h-56 w-full">
+  <Image
+    src={movie.image || "/placeholder.jpg"}
+    alt={movie.title}
+    fill
+    className="object-cover"
+    sizes="(max-width: 768px) 100vw, 33vw"
+  />
+</div>
 
-            <p className="text-sm text-gray-600">
-              Genres: {movie.genres.join(", ")}
-            </p>
-          </Link>
-        ))}
+
+      {/* CONTENT */}
+      <div className="p-4">
+       <h2 className="text-lg font-semibold text-zinc-900 mb-1">
+  <Link
+    href={`/movies/${movie._id}`}
+    className="transition hover:text-purple-600"
+  >
+    {movie.title}
+  </Link>
+</h2>
+
+
+        <p className="text-sm text-zinc-500">
+          {movie.releaseYear}
+        </p>
+
+        <p className="text-sm mt-1">
+          Director:{" "}
+          <Link
+  href={`/directors/${encodeURIComponent(movie.director)}`}
+  className="text-purple-600 hover:underline"
+>
+  {movie.director}
+</Link>
+        </p>
+
+        <p className="text-xs text-zinc-400 mt-2">
+          {movie.genres.join(" • ")}
+        </p>
       </div>
+    </div>
+  ))}
+</div>
+
     </main>
   );
 }

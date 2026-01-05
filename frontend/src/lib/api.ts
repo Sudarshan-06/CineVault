@@ -40,6 +40,18 @@ export async function fetchDirectors(): Promise<string[]> {
   });
   return res.json();
 }
+export async function fetchMoviesByDirector(name: string) {
+  const res = await fetch(
+    `http://localhost:5000/api/movies?director=${encodeURIComponent(name)}`,
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch movies by director");
+  }
+
+  return res.json();
+}
 
 export async function fetchActors(): Promise<string[]> {
   const res = await fetch("http://localhost:5000/api/actors", {
