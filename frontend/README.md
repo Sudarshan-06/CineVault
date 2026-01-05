@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 CineVault – Movie Explorer Platform
 
-## Getting Started
+CineVault is a full-stack Movie Explorer application that allows users to browse and explore movies, actors, directors, and genres.  
+User authentication is intentionally omitted as per the assignment requirements.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+### Backend
+- RESTful APIs built with **Node.js & Express**
+- **MongoDB** for data storage
+- Swagger (OpenAPI) documentation
+- Core entities:
+  - Movies
+  - Actors
+  - Directors
+  - Genres
+- Relationships:
+  - A movie can have multiple genres
+  - A movie can have multiple actors
+  - A movie has a single director
+- Backend-side filtering:
+  - Movies by **genre**
+  - Movies by **actor**
+  - Movies by **director**
+  - Movies by **release year**
+
+### Frontend
+- Built with **Next.js (React)** using App Router
+- **Tailwind CSS** for styling
+- Server-side rendering using Server Components
+- Features:
+  - Browse movies with key details
+  - Filter movies by genre, actor, and director
+  - View detailed movie pages
+  - View actor profile pages with movies they’ve worked on
+  - View director profile pages with movies they’ve directed
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- Swagger UI
+
+
+---
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- MongoDB (local or Atlas)
+- npm
+
+---
+
+### Backend Setup
 
 ```bash
+cd server
+npm install
+
+Create a .env file inside the server directory:
+
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/cinevault
+
+Run the backend:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Backend will be available at:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+http://localhost:5000
 
-## Learn More
+Seed Sample Data (Optional)
+cd server
+node scripts/seedMovies.js
 
-To learn more about Next.js, take a look at the following resources:
+Swagger API Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After starting the backend, open:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+http://localhost:5000/api-docs
 
-## Deploy on Vercel
+Frontend Setup
+cd frontend
+npm install
+npm run dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Frontend will be available at:
+
+http://localhost:3000
+
+🔍 API Filtering Examples
+GET /api/movies?genre=Sci-Fi
+GET /api/movies?actor=Leonardo DiCaprio
+GET /api/movies?director=Christopher Nolan
+GET /api/movies?genre=Action&director=Christopher Nolan
+
+
+All filtering is handled on the backend as required.
+
